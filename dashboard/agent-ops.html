@@ -1,0 +1,339 @@
+<title>Agent Ops Exnodes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: an ops board read on a phone first — status strip, KPI row, then stacked panels that become two columns on desktop. */
+:root {
+  --bg: #f3f5f2;
+  --surface: #ffffff;
+  --ink: #18201b;
+  --muted: #5f6b63;
+  --line: #dde3dd;
+  --accent: #1f9d55;          /* Exnodes signature green */
+  --ok: #1f9d55; --warn: #b7791f; --bad: #c53030; --info: #2b6cb0; --idle: #8a948d;
+  --ok-bg: #e3f4ea; --warn-bg: #fbf0dc; --bad-bg: #fbe4e4; --info-bg: #e2ecf8; --idle-bg: #eceeec;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111512; --surface: #1a201c; --ink: #e8ede9; --muted: #9aa69e; --line: #2a322d; --accent: #3ccf7a;
+  --ok: #3ccf7a; --warn: #e0a84a; --bad: #f07070; --info: #6aa6ec; --idle: #7d877f;
+  --ok-bg: #173323; --warn-bg: #3a2d14; --bad-bg: #3d1c1c; --info-bg: #172a40; --idle-bg: #242a26; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #111512; --surface: #1a201c; --ink: #e8ede9; --muted: #9aa69e; --line: #2a322d; --accent: #3ccf7a;
+  --ok: #3ccf7a; --warn: #e0a84a; --bad: #f07070; --info: #6aa6ec; --idle: #7d877f;
+  --ok-bg: #173323; --warn-bg: #3a2d14; --bad-bg: #3d1c1c; --info-bg: #172a40; --idle-bg: #242a26; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--sans); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 18px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 18px; }
+header { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+h1 { font-size: 24px; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+.sub { color: var(--muted); font-size: 13px; }
+.live { display: inline-flex; align-items: center; gap: 6px; font: 500 12px var(--mono); color: var(--muted); }
+.live i { width: 8px; height: 8px; border-radius: 50%; background: var(--idle); }
+.live.on i { background: var(--ok); box-shadow: 0 0 0 0 var(--ok); animation: pulse 2s infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 60%, transparent) } 70% { box-shadow: 0 0 0 7px transparent } 100% { box-shadow: 0 0 0 0 transparent } }
+@media (prefers-reduced-motion: reduce) { .live.on i { animation: none } }
+.kpis { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.kpi { background: var(--surface); padding: 12px 14px; display: grid; gap: 2px; min-width: 0; }
+.kpi b { font: 500 24px var(--mono); font-variant-numeric: tabular-nums; }
+.kpi span { font-size: 12px; color: var(--muted); }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; display: grid; min-width: 0; }
+.panel > h2 { margin: 0; padding: 12px 14px; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+  border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+.panel > h2 small { font: 500 11px var(--mono); letter-spacing: 0; text-transform: none; }
+.list { display: grid; }
+.row { padding: 11px 14px; border-bottom: 1px solid var(--line); display: grid; gap: 4px; min-width: 0; }
+.row:last-child { border-bottom: 0; }
+.top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; min-width: 0; }
+.name { font-weight: 600; overflow-wrap: anywhere; }
+.meta { font-size: 12.5px; color: var(--muted); overflow-wrap: anywhere; }
+.time { font: 500 11.5px var(--mono); color: var(--muted); white-space: nowrap; }
+.pill { display: inline-block; font: 600 11px var(--sans); padding: 2px 8px; border-radius: 99px; white-space: nowrap; letter-spacing: .02em; }
+.p-ok { color: var(--ok); background: var(--ok-bg); } .p-warn { color: var(--warn); background: var(--warn-bg); }
+.p-bad { color: var(--bad); background: var(--bad-bg); } .p-info { color: var(--info); background: var(--info-bg); }
+.p-idle { color: var(--idle); background: var(--idle-bg); }
+.ev { display: grid; grid-template-columns: 54px 1fr; gap: 10px; }
+.ev .k { font: 600 10.5px var(--mono); text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.empty, .note { padding: 14px; color: var(--muted); font-size: 13.5px; }
+.note.err { color: var(--bad); }
+.btn { font: 600 13px var(--sans); padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.stages { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.stage { font: 500 12px var(--mono); padding: 4px 9px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); }
+.span2 { grid-column: 1 / -1; }
+.scroll { max-height: 560px; overflow-y: auto; }
+@media (max-width: 860px) { .grid { grid-template-columns: 1fr; } .kpis { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 420px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Agent Ops · Exnodes &amp; Én Nam</h1>
+      <div class="sub" id="today">Hoạt động của các agent bán hàng, routine và session Claude</div>
+    </div>
+    <span class="live" id="live"><i></i><span id="liveText">đang kết nối…</span></span>
+  </header>
+
+  <section class="kpis" aria-label="Chỉ số hôm nay">
+    <div class="kpi"><b id="k-sent">–</b><span>Email đã gửi</span></div>
+    <div class="kpi"><b id="k-replies">–</b><span>Phản hồi</span></div>
+    <div class="kpi"><b id="k-leads">–</b><span>Lead mới</span></div>
+    <div class="kpi"><b id="k-proposals">–</b><span>Đề xuất / báo giá</span></div>
+    <div class="kpi"><b id="k-meetings">–</b><span>Cuộc gọi hẹn</span></div>
+    <div class="kpi"><b id="k-asks">–</b><span>Chờ anh duyệt</span></div>
+  </section>
+
+  <div class="grid">
+    <section class="panel">
+      <h2>Agents <small id="agentsAt"></small></h2>
+      <div class="list" id="agents"><div class="empty">Chưa có agent nào báo trạng thái. Agent ghi vào mục <code>agents</code> mỗi khi bắt đầu hoặc xong một việc.</div></div>
+    </section>
+
+    <section class="panel">
+      <h2>Chờ anh duyệt</h2>
+      <div class="list" id="asks"><div class="empty">Không có việc nào đang chờ.</div></div>
+    </section>
+
+    <section class="panel">
+      <h2>Routines <small id="trigAt"></small></h2>
+      <div class="list" id="triggers"><div class="empty">Đang đọc lịch chạy từ Claude Code Remote…</div></div>
+    </section>
+
+    <section class="panel">
+      <h2>Sessions <small id="sessAt"></small></h2>
+      <div class="list" id="sessions"><div class="empty">Đang đọc session từ Claude Code Remote…</div></div>
+    </section>
+
+    <section class="panel span2">
+      <h2>Pipeline</h2>
+      <div class="stages" id="stages"></div>
+      <div class="list scroll" id="pipeline"><div class="empty">Chưa có lead nào trong pipeline.</div></div>
+    </section>
+
+    <section class="panel span2">
+      <h2>Nhật ký hoạt động <small>60 mục gần nhất</small></h2>
+      <div class="list scroll" id="events"><div class="empty">Chưa có hoạt động nào.</div></div>
+    </section>
+  </div>
+</div>
+
+<script>
+(function () {
+  var TZ = "Asia/Ho_Chi_Minh", CCR = "Claude Code Remote";
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = String(text); return e; }
+  function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+  function pill(text, tone) { return el("span", "pill p-" + tone, text); }
+  function fmtTime(iso) {
+    if (!iso) return "";
+    var d = new Date(iso); if (isNaN(d)) return String(iso);
+    return new Intl.DateTimeFormat("vi-VN", { timeZone: TZ, hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit" }).format(d);
+  }
+  function ago(iso) {
+    if (!iso) return ""; var t = new Date(iso).getTime(); if (isNaN(t)) return "";
+    var s = Math.round((Date.now() - t) / 1000), f = s < 0, a = Math.abs(s), out;
+    if (a < 60) out = a + " giây"; else if (a < 3600) out = Math.round(a / 60) + " phút"; else if (a < 86400) out = Math.round(a / 3600) + " giờ"; else out = Math.round(a / 86400) + " ngày";
+    return f ? "sau " + out : out + " trước";
+  }
+  function todayKey() { return new Intl.DateTimeFormat("en-CA", { timeZone: TZ }).format(new Date()); }
+  document.getElementById("today").textContent = "Hôm nay " + new Intl.DateTimeFormat("vi-VN", { timeZone: TZ, weekday: "long", day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date()) + " (giờ Việt Nam)";
+
+  var AGENT_TONE = { working: ["Đang làm", "ok"], waiting: ["Chờ phản hồi", "info"], blocked: ["Bị chặn", "bad"], error: ["Lỗi", "bad"], idle: ["Rảnh", "idle"], done: ["Xong", "idle"] };
+  var STAGES = [["researched", "Đã nghiên cứu"], ["contacted", "Đã liên hệ"], ["replied", "Đã phản hồi"], ["meeting", "Hẹn gọi"], ["proposal", "Báo giá"], ["won", "Chốt"], ["lost", "Dừng"], ["hold", "Tạm giữ"]];
+  var STAGE_TONE = { researched: "idle", contacted: "info", replied: "ok", meeting: "ok", proposal: "warn", won: "ok", lost: "idle", hold: "warn" };
+  var liveCount = 0;
+  function markLive() { liveCount++; document.getElementById("live").classList.add("on"); document.getElementById("liveText").textContent = "trực tiếp · " + fmtTime(new Date().toISOString()); }
+
+  // ---------- db: what the agents report ----------
+  function renderAgents(snap) {
+    var box = document.getElementById("agents"); clear(box);
+    if (snap.empty) { box.appendChild(el("div", "empty", "Chưa có agent nào báo trạng thái.")); return; }
+    var docs = snap.docs.map(function (d) { return d.data(); }).sort(function (a, b) { return String(b.updatedAt || "").localeCompare(String(a.updatedAt || "")); });
+    docs.forEach(function (a) {
+      var r = el("div", "row"), top = el("div", "top"), left = el("div");
+      left.appendChild(el("span", "name", a.name || "Agent"));
+      if (a.role) left.appendChild(el("span", "meta", " · " + a.role));
+      var t = AGENT_TONE[a.status] || [a.status || "?", "idle"];
+      top.appendChild(left); top.appendChild(pill(t[0], t[1])); r.appendChild(top);
+      if (a.task) r.appendChild(el("div", "", a.task));
+      var m = [];
+      if (a.next) m.push("Tiếp theo: " + a.next);
+      if (a.updatedAt) m.push("cập nhật " + ago(a.updatedAt));
+      if (m.length) r.appendChild(el("div", "meta", m.join(" · ")));
+      box.appendChild(r);
+    });
+    document.getElementById("agentsAt").textContent = docs[0] && docs[0].updatedAt ? ago(docs[0].updatedAt) : "";
+    markLive();
+  }
+
+  var askCount = 0;
+  function renderAsks(snap) {
+    var box = document.getElementById("asks"); clear(box);
+    var open = snap.docs.map(function (d) { return d.data(); }).filter(function (a) { return a.status !== "done"; })
+      .sort(function (a, b) { return (a.priority || 9) - (b.priority || 9) || String(a.createdAt || "").localeCompare(String(b.createdAt || "")); });
+    askCount = open.length; document.getElementById("k-asks").textContent = askCount;
+    if (!open.length) { box.appendChild(el("div", "empty", "Không có việc nào đang chờ.")); return; }
+    open.forEach(function (a) {
+      var r = el("div", "row"), top = el("div", "top");
+      top.appendChild(el("span", "name", a.title || "Việc cần duyệt"));
+      top.appendChild(pill(a.due ? "hạn " + a.due : (a.priority === 1 ? "gấp" : "chờ"), a.priority === 1 ? "bad" : "warn"));
+      r.appendChild(top);
+      if (a.detail) r.appendChild(el("div", "meta", a.detail));
+      box.appendChild(r);
+    });
+    markLive();
+  }
+
+  function renderMetrics(snap) {
+    var key = todayKey(), doc = null;
+    snap.docs.forEach(function (d) { var v = d.data(); if (v.date === key) doc = v; });
+    if (!doc && snap.docs.length) doc = snap.docs[0].data();
+    function set(id, v) { document.getElementById(id).textContent = v == null ? "0" : v; }
+    if (!doc) return;
+    set("k-sent", doc.emailsSent); set("k-replies", doc.replies); set("k-leads", doc.newLeads);
+    set("k-proposals", doc.proposals); set("k-meetings", doc.meetings);
+    markLive();
+  }
+
+  function renderPipeline(snap) {
+    var box = document.getElementById("pipeline"), st = document.getElementById("stages"); clear(box); clear(st);
+    var rows = snap.docs.map(function (d) { return d.data(); });
+    var counts = {}; rows.forEach(function (p) { counts[p.stage] = (counts[p.stage] || 0) + 1; });
+    STAGES.forEach(function (s) { if (counts[s[0]]) st.appendChild(el("span", "stage", s[1] + " " + counts[s[0]])); });
+    if (!rows.length) { box.appendChild(el("div", "empty", "Chưa có lead nào trong pipeline.")); return; }
+    var order = {}; STAGES.forEach(function (s, i) { order[s[0]] = i; });
+    rows.sort(function (a, b) { return (order[a.stage] == null ? 99 : order[a.stage]) - (order[b.stage] == null ? 99 : order[b.stage]) || String(b.lastTouch || "").localeCompare(String(a.lastTouch || "")); });
+    var label = {}; STAGES.forEach(function (s) { label[s[0]] = s[1]; });
+    rows.forEach(function (p) {
+      var r = el("div", "row"), top = el("div", "top"), left = el("div");
+      left.appendChild(el("span", "name", p.company || "Lead"));
+      var tag = [p.market, p.segment].filter(Boolean).join(" · "); if (tag) left.appendChild(el("span", "meta", " · " + tag));
+      top.appendChild(left); top.appendChild(pill(label[p.stage] || p.stage || "?", STAGE_TONE[p.stage] || "idle")); r.appendChild(top);
+      var m = []; if (p.next) m.push("Tiếp: " + p.next); if (p.owner) m.push(p.owner); if (p.lastTouch) m.push(fmtTime(p.lastTouch));
+      if (m.length) r.appendChild(el("div", "meta", m.join(" · ")));
+      box.appendChild(r);
+    });
+    markLive();
+  }
+
+  var KIND = { email: "email", reply: "reply", task: "task", report: "báo cáo", research: "tìm", blocked: "chặn", error: "lỗi", note: "ghi" };
+  function renderEvents(snap) {
+    var box = document.getElementById("events"); clear(box);
+    if (snap.empty) { box.appendChild(el("div", "empty", "Chưa có hoạt động nào.")); return; }
+    snap.docs.forEach(function (d) {
+      var e = d.data(), r = el("div", "row ev");
+      r.appendChild(el("div", "k", KIND[e.kind] || e.kind || "·"));
+      var body = el("div"), top = el("div", "top");
+      top.appendChild(el("span", "", e.title || "")); top.appendChild(el("span", "time", fmtTime(e.ts)));
+      body.appendChild(top);
+      var m = [e.agent, e.detail].filter(Boolean).join(" · "); if (m) body.appendChild(el("div", "meta", m));
+      r.appendChild(body); box.appendChild(r);
+    });
+    markLive();
+  }
+
+  function dbError(boxId) { return function (e) { var b = document.getElementById(boxId); clear(b); b.appendChild(el("div", "note err", "Không đọc được dữ liệu (" + (e && e.code) + "). Tải lại trang để thử lại.")); }; }
+
+  claude.use("db").then(function (db) {
+    if (!db) { document.getElementById("liveText").textContent = "cần đăng nhập claude.ai để xem dữ liệu agent"; return; }
+    db.collection("agents").onSnapshot(renderAgents, dbError("agents"));
+    db.collection("asks").onSnapshot(renderAsks, dbError("asks"));
+    db.collection("metrics").orderBy("date", "desc").limit(7).onSnapshot(renderMetrics, function () {});
+    db.collection("pipeline").onSnapshot(renderPipeline, dbError("pipeline"));
+    db.collection("events").orderBy("ts", "desc").limit(60).onSnapshot(renderEvents, dbError("events"));
+  });
+
+  // ---------- mcp: routines and sessions straight from Claude Code Remote ----------
+  function mcpMessage(code) {
+    switch (code) {
+      case "needs_reauth": return "Kết nối Claude Code Remote đã hết hạn. Kết nối lại trong claude.ai → Settings → Connectors.";
+      case "server_not_connected": return "Chưa có connector Claude Code Remote. Thêm trong claude.ai → Settings → Connectors.";
+      case "selection_required": return "Có nhiều connector Claude Code Remote, hãy chọn một khi claude.ai hỏi.";
+      case "not_in_manifest": return "Trang này chưa được phép đọc Claude Code Remote. Bật lại trong menu Permissions của artifact.";
+      case "blocked_by_policy": return "Chính sách tổ chức đang chặn đọc dữ liệu này.";
+      case "not_granted": case "capability_disabled": case "capability_removed": return "Giao diện xem này không đọc được connector. Mở trang trong claude.ai hoặc app Claude.";
+      default: return "Tạm thời không đọc được (" + code + "). Trang sẽ tự thử lại.";
+    }
+  }
+  var DENY = { needs_reauth: 1, server_not_connected: 1, not_in_manifest: 1, blocked_by_policy: 1, approval_required: 1, selection_required: 1 };
+
+  function sectionState(boxId, atId) {
+    var hasData = false;
+    return {
+      data: function (result, render) { hasData = true; render(result.payload); var c = result.cache; document.getElementById(atId).textContent = "cập nhật " + ago(c && c.storedAt ? new Date(c.storedAt).toISOString() : new Date().toISOString()); markLive(); },
+      error: function (err, retry) {
+        var code = err && err.code, box = document.getElementById(boxId);
+        if (hasData && !DENY[code]) { document.getElementById(atId).textContent = "dữ liệu cũ · đang thử lại"; return; }
+        hasData = false; clear(box);
+        if (code === "approval_required") {
+          box.appendChild(el("div", "note", "Cần anh cho phép trang đọc Claude Code Remote."));
+          var b = el("button", "btn", "Cho phép và tải"); b.type = "button"; b.addEventListener("click", retry);
+          var w = el("div", "note"); w.appendChild(b); box.appendChild(w); return;
+        }
+        box.appendChild(el("div", "note err", mcpMessage(code)));
+      }
+    };
+  }
+
+  function renderTriggers(p) {
+    var box = document.getElementById("triggers"); clear(box);
+    var list = (p && (p.data || (p.ccr && p.ccr.data))) || [];
+    list = list.slice().sort(function (a, b) { return (b.enabled ? 1 : 0) - (a.enabled ? 1 : 0) || String(a.next_run_at || "").localeCompare(String(b.next_run_at || "")); });
+    if (!list.length) { box.appendChild(el("div", "empty", "Chưa có routine nào.")); return; }
+    list.forEach(function (t) {
+      var r = el("div", "row"), top = el("div", "top");
+      top.appendChild(el("span", "name", t.name || t.id));
+      var lr = t.last_run || {}, st = String(lr.status || "");
+      var tone, label;
+      if (!t.enabled) { tone = "idle"; label = t.suspension_reason ? "Tạm dừng (gói)" : (t.ended_reason ? "Đã kết thúc" : "Đã tắt"); }
+      else if (/RUNNING|STARTED|IN_PROGRESS/.test(st)) { tone = "ok"; label = "Đang chạy"; }
+      else if (/FAILED/.test(st)) { tone = "bad"; label = "Lần trước lỗi"; }
+      else if (/SUCCEEDED/.test(st)) { tone = "ok"; label = "Đang bật"; }
+      else { tone = "info"; label = "Chưa chạy lần nào"; }
+      top.appendChild(pill(label, tone)); r.appendChild(top);
+      var m = [];
+      if (t.enabled && t.next_run_at) m.push("Lần tới " + fmtTime(t.next_run_at) + " (" + ago(t.next_run_at) + ")");
+      if (lr.fired_at) m.push("Lần trước " + fmtTime(lr.fired_at));
+      if (lr.failure_reason) m.push(String(lr.failure_reason).replace("ROUTINE_RUN_FAILURE_REASON_", "").toLowerCase().replace(/_/g, " "));
+      if (m.length) r.appendChild(el("div", "meta", m.join(" · ")));
+      box.appendChild(r);
+    });
+  }
+
+  var BUCKET = { SESSION_STATUS_BUCKET_WORKING: ["Đang làm", "ok"], SESSION_STATUS_BUCKET_BLOCKED: ["Chờ anh", "warn"], SESSION_STATUS_BUCKET_REVIEW_READY: ["Chờ duyệt", "info"], SESSION_STATUS_BUCKET_COMPLETED: ["Xong", "idle"], SESSION_STATUS_BUCKET_FAILED: ["Lỗi", "bad"] };
+  function renderSessions(p) {
+    var box = document.getElementById("sessions"); clear(box);
+    var list = (p && ((p.ccr && p.ccr.data) || p.data)) || [];
+    if (!list.length) { box.appendChild(el("div", "empty", "Chưa có session nào.")); return; }
+    list.forEach(function (s) {
+      var r = el("div", "row"), top = el("div", "top");
+      top.appendChild(el("span", "name", s.title || s.id));
+      var b = BUCKET[s.status_bucket] || [String(s.session_status || "?").replace("SESSION_STATUS_", "").toLowerCase(), "idle"];
+      top.appendChild(pill(b[0], b[1])); r.appendChild(top);
+      var summary = (s.post_turn_summary && s.post_turn_summary.recent_action) || s.task_summary;
+      if (summary) r.appendChild(el("div", "meta", summary));
+      if (s.updated_at) r.appendChild(el("div", "time", ago(s.updated_at)));
+      box.appendChild(r);
+    });
+  }
+
+  function watch(mcp, tool, input, boxId, atId, render) {
+    var state = sectionState(boxId, atId);
+    function retry() { mcp.callTool(CCR, tool, input).then(function (res) { state.data(res, render); }, function (e) { state.error(e, retry); }); }
+    mcp.watchTool(CCR, tool, input, function (ev) { if (ev.type === "data") state.data(ev.result, render); else state.error(ev.error, retry); }, { refetchInterval: 60000 });
+  }
+
+  claude.use("mcp").then(function (mcp) {
+    if (!mcp) {
+      ["triggers", "sessions"].forEach(function (id) { var b = document.getElementById(id); clear(b); b.appendChild(el("div", "note", "Giao diện xem này không đọc được connector. Mở trang trong claude.ai hoặc app Claude.")); });
+      return;
+    }
+    watch(mcp, "list_triggers", { limit: 50 }, "triggers", "trigAt", renderTriggers);
+    watch(mcp, "list_sessions", { limit: 12, mine: true }, "sessions", "sessAt", renderSessions);
+  });
+})();
+</script>

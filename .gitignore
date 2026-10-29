@@ -1,0 +1,3 @@
+memory/bids/
+*.local.md
+__pycache__/

@@ -1,0 +1,740 @@
+{
+ "generatedAt": "2026-10-29T07:47:50Z",
+ "agents": [
+  {
+   "name": "Daily Report",
+   "next": "Chạy lần đầu 17h45 hôm nay",
+   "role": "Routine · 17h45 hằng ngày",
+   "status": "waiting",
+   "task": "Kiểm tra phản hồi, bounce, cập nhật pipeline, gửi báo cáo ngày",
+   "updatedAt": "2026-10-29T07:11:00Z"
+  },
+  {
+   "name": "Danh Trinh",
+   "next": "Hạn 31/10",
+   "role": "Người · Mobile dev Én Nam",
+   "status": "waiting",
+   "task": "Nội dung kỹ thuật và ảnh chụp cho case study portfolio",
+   "updatedAt": "2026-10-29T07:02:00Z"
+  },
+  {
+   "name": "Marketing (Dung, Tuyền)",
+   "next": "Báo cáo trước 17h mỗi ngày",
+   "role": "Người · Marketing Én Nam",
+   "status": "waiting",
+   "task": "Điền 8 form khách, 3 bài LinkedIn và Facebook, 20 lời mời kết nối mỗi ngày",
+   "updatedAt": "2026-10-29T07:06:00Z"
+  },
+  {
+   "name": "Phoebe",
+   "next": "Hạn rate card 9h 30/10",
+   "role": "Người · Chairman Assistant",
+   "status": "waiting",
+   "task": "Gửi rate card, profile, danh sách báo giá chưa chốt; đẩy 10 deal đang chạy",
+   "updatedAt": "2026-10-29T06:36:00Z"
+  },
+  {
+   "name": "Prospect Research",
+   "next": "Tìm thêm khách Úc khi hàng đợi cạn",
+   "role": "Claude · subagent nghiên cứu",
+   "status": "done",
+   "task": "Đã tìm 81 lead mới (22 Toy City, 29 Việt Nam/Úc, 30 Úc) và 16 lead ấm từ Gmail",
+   "updatedAt": "2026-10-29T07:20:00Z"
+  },
+  {
+   "name": "Sales Lead",
+   "next": "Gỡ tài liệu bán hàng khỏi low-poly-tile-city, báo cáo 17h45",
+   "role": "Claude · session Toy City project sales",
+   "status": "working",
+   "task": "Push quy trình và memory lên my-agentic-ennam, dựng CI/CD GitHub Pages cho dashboard",
+   "updatedAt": "2026-10-29T07:47:10Z"
+  },
+  {
+   "name": "Trinh",
+   "next": "Hạn 03/11",
+   "role": "Người · Designer Én Nam",
+   "status": "waiting",
+   "task": "Portfolio 2026: 5 case study mới, bản dưới 5 MB và bản 2 trang cho Úc",
+   "updatedAt": "2026-10-29T07:02:00Z"
+  }
+ ],
+ "events": [
+  {
+   "agent": "Sales Lead",
+   "detail": "sales-workflow, prospecting, outreach, follow-up, daily-report, ops-status",
+   "kind": "task",
+   "title": "Viết xong quy trình 6 skill và chuyển memory tìm khách sang repo mới (cục bộ)",
+   "ts": "2026-10-29T07:39:36Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "CI kiểm tra không lộ email/số điện thoại trước khi deploy",
+   "kind": "task",
+   "title": "Chuyển sang repo my-agentic-ennam, thêm bản dashboard công khai trên GitHub Pages",
+   "ts": "2026-10-29T07:47:10Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Chạy 29/10 đến 03/11",
+   "kind": "task",
+   "title": "Tạo routine báo cáo 17h45 hằng ngày",
+   "ts": "2026-10-29T06:16:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Ảnh, video 14 giây, bảng giá",
+   "kind": "task",
+   "title": "Quay demo và dựng trang giới thiệu Toy City song ngữ",
+   "ts": "2026-10-29T06:20:00Z"
+  },
+  {
+   "agent": "Prospect Research",
+   "detail": "BĐS, virtual tour, agency, edtech",
+   "kind": "research",
+   "title": "Tìm 22 khách tiềm năng cho Toy City",
+   "ts": "2026-10-29T06:23:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "VR360, Panoee, Mona, Gamuda, Bluemarq, Monkey, STEAM for Vietnam",
+   "kind": "email",
+   "title": "Gửi 7 email chào Toy City",
+   "ts": "2026-10-29T06:27:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Hạn 9h 30/10",
+   "kind": "email",
+   "title": "Xin Phoebe rate card, profile, danh sách báo giá chưa chốt",
+   "ts": "2026-10-29T06:31:00Z"
+  },
+  {
+   "agent": "Prospect Research",
+   "detail": "Khách cũ chưa chốt và khách hiện tại có thể bán thêm",
+   "kind": "research",
+   "title": "Lục Gmail ra 16 lead ấm",
+   "ts": "2026-10-29T06:34:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "P2P, Otogether, Lancaster, VCI Legal, PandaPay, Alea.Care",
+   "kind": "email",
+   "title": "Gửi 6 follow-up lead cũ",
+   "ts": "2026-10-29T06:36:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Villa Song, TAG, LittleBig, C4K, AIOS…",
+   "kind": "task",
+   "title": "Giao Phoebe và Kai đẩy 10 deal đang chạy",
+   "ts": "2026-10-29T06:37:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Chờ tài khoản Freelancer",
+   "kind": "task",
+   "title": "Soạn 5 đề xuất chào giá Freelancer",
+   "ts": "2026-10-29T06:45:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Adsplus, SEONGON, GOBRANDING, RI Events, HoaBinh, Sprint Digital, Digital8, MediaPlus",
+   "kind": "email",
+   "title": "Gửi 8 email chào khách mới (Việt Nam, Úc, Singapore)",
+   "ts": "2026-10-29T06:50:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Agentsy, Syncrowin, Creed Digital, Asseti",
+   "kind": "email",
+   "title": "Gửi 4 email Úc kèm portfolio",
+   "ts": "2026-10-29T06:56:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Phoebe, Trinh designer, Danh Trinh",
+   "kind": "task",
+   "title": "Giao làm Portfolio 2026",
+   "ts": "2026-10-29T07:02:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Dung, Tuyền",
+   "kind": "task",
+   "title": "Giao Marketing điền form, LinkedIn, Facebook",
+   "ts": "2026-10-29T07:06:00Z"
+  },
+  {
+   "agent": "Prospect Research",
+   "detail": "Agency đang tuyển dev, startup vừa gọi vốn, construction tech",
+   "kind": "research",
+   "title": "Tìm 30 khách Úc mới, giữ riêng 3 khách childcare",
+   "ts": "2026-10-29T07:15:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Word Of Mouth, Hide and Seek, Code Heroes, AEK, theBOSSapp, Safer Places, Trendspek, RentBetter, Stanford Legal, Jacaranda, BuildPass, SPEC Toolbox",
+   "kind": "email",
+   "title": "Gửi 12 email Úc đợt 2",
+   "ts": "2026-10-29T07:20:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Tài liệu bán hàng chuyển sang repo riêng",
+   "kind": "task",
+   "title": "Đóng PR #16 trên low-poly-tile-city",
+   "ts": "2026-10-29T07:26:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Chờ anh cấp quyền GitHub App",
+   "kind": "blocked",
+   "title": "Chưa truy cập được repo my-agentic-compant",
+   "ts": "2026-10-29T07:28:00Z"
+  },
+  {
+   "agent": "Sales Lead",
+   "detail": "Routine và session đọc trực tiếp; agent ghi trạng thái vào db",
+   "kind": "task",
+   "title": "Ra mắt dashboard Agent Ops",
+   "ts": "2026-10-29T07:35:00Z"
+  }
+ ],
+ "asks": [
+  {
+   "createdAt": "2026-10-29T06:40:00Z",
+   "detail": "Đã gửi email follow-up; một cuộc gọi từ Chairman sẽ chốt nhanh hơn.",
+   "priority": 2,
+   "status": "open",
+   "title": "Gọi trực tiếp P2P (chị Quỳnh) và Lancaster (anh/chị Khánh)"
+  },
+  {
+   "createdAt": "2026-10-29T07:15:00Z",
+   "detail": "OWNA, Storypark, TeamKids, Goodstart, Busy Bees: chưa liên hệ vì liên quan khách Care for Kids.",
+   "priority": 3,
+   "status": "open",
+   "title": "Quyết định nhóm khách childcare đang giữ"
+  },
+  {
+   "createdAt": "2026-10-29T07:20:00Z",
+   "detail": "Email gửi Code Heroes ghi \"Flutter từ 2019\" nhưng portfolio không nêu năm. Cần mốc thật nếu khách hỏi.",
+   "priority": 3,
+   "status": "open",
+   "title": "Xác nhận mốc năm làm Flutter"
+  },
+  {
+   "createdAt": "2026-10-29T06:45:00Z",
+   "detail": "Dự án Criclive hết hạn khoảng 31/10. Đề xuất đã soạn sẵn trong bids-freelancer.md.",
+   "due": "31/10",
+   "priority": 1,
+   "status": "open",
+   "title": "Tạo tài khoản Freelancer.com để nộp 5 đề xuất"
+  },
+  {
+   "createdAt": "2026-10-29T07:28:00Z",
+   "detail": "Anh chọn dùng my-agentic-ennam thay cho my-agentic-compant.",
+   "priority": 1,
+   "status": "done",
+   "title": "Cấp quyền repo my-agentic-compant"
+  },
+  {
+   "createdAt": "2026-10-29T06:20:00Z",
+   "detail": "Trang claude.ai/artifact/Czgd1vAMUWjtJa9ZGZFjMe đang ở chế độ riêng tư.",
+   "priority": 3,
+   "status": "open",
+   "title": "Share trang giới thiệu Toy City nếu muốn gửi khách"
+  },
+  {
+   "createdAt": "2026-10-29T06:45:00Z",
+   "detail": "Hệ thống kiểm kê phát thải khí, tìm national firm. Cần hồ sơ pháp lý, năng lực và đối tác môi trường.",
+   "due": "03/11",
+   "priority": 2,
+   "status": "open",
+   "title": "Có theo gói thầu UNDP-VNM-02408 không"
+  }
+ ],
+ "metrics": [
+  {
+   "date": "2026-10-29",
+   "emailsSent": 37,
+   "meetings": 0,
+   "newLeads": 97,
+   "note": "emailsSent chỉ tính email gửi ra ngoài; proposals là 5 đề xuất Freelancer đã soạn, chưa nộp",
+   "proposals": 5,
+   "replies": 0
+  }
+ ],
+ "pipeline": [
+  {
+   "company": "Adsplus",
+   "lastTouch": "2026-10-29T06:50:00Z",
+   "market": "VN",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Agency white-label",
+   "stage": "contacted"
+  },
+  {
+   "company": "AEK Media",
+   "lastTouch": "2026-10-29T07:20:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Agency + SupplyScope",
+   "stage": "contacted"
+  },
+  {
+   "company": "Agentsy",
+   "lastTouch": "2026-10-29T06:56:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "AI partner",
+   "stage": "contacted"
+  },
+  {
+   "company": "AIOS Solutions (AIO Analytics)",
+   "lastTouch": "2026-10-29T06:37:00Z",
+   "market": "US",
+   "next": "Chốt SOW và đợt cọc",
+   "owner": "Phoebe",
+   "segment": "Khách hiện tại",
+   "stage": "proposal"
+  },
+  {
+   "company": "AKYN / The Secret Côn Đảo",
+   "lastTouch": "2026-10-29T06:37:00Z",
+   "market": "VN",
+   "next": "Chào gói Save Turtles Run 2026/2027",
+   "owner": "Phoebe",
+   "segment": "Khách hiện tại",
+   "stage": "proposal"
+  },
+  {
+   "company": "Alea.Care",
+   "lastTouch": "2026-10-29T06:36:00Z",
+   "market": "EU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Lead cũ",
+   "stage": "contacted"
+  },
+  {
+   "company": "Asseti",
+   "lastTouch": "2026-10-29T06:56:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Proptech",
+   "stage": "contacted"
+  },
+  {
+   "company": "Bluemarq",
+   "lastTouch": "2026-10-29T06:27:00Z",
+   "market": "VN",
+   "next": "Nhắc lại 31/10 (cần duyệt)",
+   "owner": "Sales Lead",
+   "segment": "Toy City",
+   "stage": "contacted"
+  },
+  {
+   "company": "BuildPass",
+   "lastTouch": "2026-10-29T07:20:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Construction tech",
+   "stage": "contacted"
+  },
+  {
+   "company": "Busy Bees Early Learning",
+   "lastTouch": "2026-10-29T07:15:00Z",
+   "market": "AU",
+   "next": "Chờ anh quyết",
+   "owner": "—",
+   "segment": "Childcare",
+   "stage": "hold"
+  },
+  {
+   "company": "Care for Kids (gia hạn Q1/2027)",
+   "lastTouch": "2026-10-29T06:37:00Z",
+   "market": "AU",
+   "next": "Chuẩn bị gia hạn, chào Klaviyo",
+   "owner": "Kai, Phoebe",
+   "segment": "Khách hiện tại",
+   "stage": "proposal"
+  },
+  {
+   "company": "Code Heroes",
+   "lastTouch": "2026-10-29T07:20:00Z",
+   "market": "AU",
+   "next": "Xác nhận mốc năm Flutter nếu khách hỏi",
+   "owner": "Sales Lead",
+   "segment": "Studio Flutter",
+   "stage": "contacted"
+  },
+  {
+   "company": "Creed Digital",
+   "lastTouch": "2026-10-29T06:56:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Agency",
+   "stage": "contacted"
+  },
+  {
+   "company": "Digital8",
+   "lastTouch": "2026-10-29T06:50:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Agency",
+   "stage": "contacted"
+  },
+  {
+   "company": "Khách anh Minh (báo giá Én Nam 26/10)",
+   "lastTouch": "2026-10-29T06:37:00Z",
+   "market": "VN",
+   "next": "Hỏi feedback và ngày bắt đầu",
+   "owner": "Phoebe",
+   "segment": "Resource",
+   "stage": "proposal"
+  },
+  {
+   "company": "Gamuda Land Việt Nam",
+   "lastTouch": "2026-10-29T06:27:00Z",
+   "market": "VN",
+   "next": "Nhắc lại 31/10 (cần duyệt)",
+   "owner": "Sales Lead",
+   "segment": "Toy City",
+   "stage": "contacted"
+  },
+  {
+   "company": "GOBRANDING",
+   "lastTouch": "2026-10-29T06:50:00Z",
+   "market": "VN",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Agency white-label",
+   "stage": "contacted"
+  },
+  {
+   "company": "Goodstart Early Learning",
+   "lastTouch": "2026-10-29T07:15:00Z",
+   "market": "AU",
+   "next": "Chờ anh quyết",
+   "owner": "—",
+   "segment": "Childcare",
+   "stage": "hold"
+  },
+  {
+   "company": "Hide and Seek Digital",
+   "lastTouch": "2026-10-29T07:20:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Agency .NET",
+   "stage": "contacted"
+  },
+  {
+   "company": "HoaBinh Events",
+   "lastTouch": "2026-10-29T06:50:00Z",
+   "market": "VN",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Sự kiện",
+   "stage": "contacted"
+  },
+  {
+   "company": "Jacaranda Finance",
+   "lastTouch": "2026-10-29T07:20:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Fintech",
+   "stage": "contacted"
+  },
+  {
+   "company": "Lancaster Legacy Hotel",
+   "lastTouch": "2026-10-29T06:36:00Z",
+   "market": "VN",
+   "next": "Anh gọi trực tiếp",
+   "owner": "Sales Lead",
+   "segment": "Lead cũ",
+   "stage": "contacted"
+  },
+  {
+   "company": "LittleBig Connection / Mantu",
+   "lastTouch": "2026-10-29T06:37:00Z",
+   "market": "EU",
+   "next": "Xin PO trước tháng 12",
+   "owner": "Phoebe",
+   "segment": "Payroll",
+   "stage": "proposal"
+  },
+  {
+   "company": "Marque Ink",
+   "lastTouch": "2026-10-29T06:37:00Z",
+   "market": "US",
+   "next": "Đề nghị thanh toán theo mốc",
+   "owner": "Phoebe",
+   "segment": "Website dở dang",
+   "stage": "proposal"
+  },
+  {
+   "company": "MediaPlus Digital",
+   "lastTouch": "2026-10-29T06:50:00Z",
+   "market": "SG",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Agency",
+   "stage": "contacted"
+  },
+  {
+   "company": "Mona Media",
+   "lastTouch": "2026-10-29T06:27:00Z",
+   "market": "VN",
+   "next": "Nhắc lại 31/10 (cần duyệt)",
+   "owner": "Sales Lead",
+   "segment": "Toy City",
+   "stage": "contacted"
+  },
+  {
+   "company": "Monkey",
+   "lastTouch": "2026-10-29T06:27:00Z",
+   "market": "VN",
+   "next": "Nhắc lại 31/10 (cần duyệt)",
+   "owner": "Sales Lead",
+   "segment": "Toy City",
+   "stage": "contacted"
+  },
+  {
+   "company": "Otogether",
+   "lastTouch": "2026-10-29T06:36:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Lead cũ",
+   "stage": "contacted"
+  },
+  {
+   "company": "OWNA",
+   "lastTouch": "2026-10-29T07:15:00Z",
+   "market": "AU",
+   "next": "Chờ anh quyết",
+   "owner": "—",
+   "segment": "Childcare",
+   "stage": "hold"
+  },
+  {
+   "company": "P2P Digital (ICRBO, Chubb Life)",
+   "lastTouch": "2026-10-29T06:36:00Z",
+   "market": "VN",
+   "next": "Anh gọi Zalo chị Quỳnh",
+   "owner": "Sales Lead",
+   "segment": "Lead cũ",
+   "stage": "contacted"
+  },
+  {
+   "company": "PandaPay (ERP nhà tang lễ)",
+   "lastTouch": "2026-10-29T06:36:00Z",
+   "market": "CA",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Lead giới thiệu",
+   "stage": "contacted"
+  },
+  {
+   "company": "Panoee",
+   "lastTouch": "2026-10-29T06:27:00Z",
+   "market": "VN",
+   "next": "Nhắc lại 31/10 (cần duyệt)",
+   "owner": "Sales Lead",
+   "segment": "Toy City",
+   "stage": "contacted"
+  },
+  {
+   "company": "RentBetter",
+   "lastTouch": "2026-10-29T07:20:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Proptech",
+   "stage": "contacted"
+  },
+  {
+   "company": "RI Events",
+   "lastTouch": "2026-10-29T06:50:00Z",
+   "market": "VN",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Sự kiện",
+   "stage": "contacted"
+  },
+  {
+   "company": "Safer Places Network",
+   "lastTouch": "2026-10-29T07:20:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Retail security SaaS",
+   "stage": "contacted"
+  },
+  {
+   "company": "SEONGON",
+   "lastTouch": "2026-10-29T06:50:00Z",
+   "market": "VN",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Agency white-label",
+   "stage": "contacted"
+  },
+  {
+   "company": "SPEC Toolbox",
+   "lastTouch": "2026-10-29T07:20:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Construction tech",
+   "stage": "contacted"
+  },
+  {
+   "company": "Sprint Digital",
+   "lastTouch": "2026-10-29T06:50:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Agency",
+   "stage": "contacted"
+  },
+  {
+   "company": "Stanford Legal",
+   "lastTouch": "2026-10-29T07:20:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Legal AI",
+   "stage": "contacted"
+  },
+  {
+   "company": "STEAM for Vietnam",
+   "lastTouch": "2026-10-29T06:27:00Z",
+   "market": "VN",
+   "next": "Nhắc lại 31/10 (cần duyệt)",
+   "owner": "Sales Lead",
+   "segment": "Toy City",
+   "stage": "contacted"
+  },
+  {
+   "company": "Storypark",
+   "lastTouch": "2026-10-29T07:15:00Z",
+   "market": "NZ",
+   "next": "Chờ anh quyết",
+   "owner": "—",
+   "segment": "Childcare",
+   "stage": "hold"
+  },
+  {
+   "company": "Syncrowin",
+   "lastTouch": "2026-10-29T06:56:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Startup vừa gọi vốn",
+   "stage": "contacted"
+  },
+  {
+   "company": "TAG Group / SiteSmart",
+   "lastTouch": "2026-10-29T06:37:00Z",
+   "market": "AU",
+   "next": "Gửi ROI, xin lịch Zoom (AUD 26.000)",
+   "owner": "Phoebe, Kai",
+   "segment": "Khách hiện tại",
+   "stage": "proposal"
+  },
+  {
+   "company": "TeamKids",
+   "lastTouch": "2026-10-29T07:15:00Z",
+   "market": "AU",
+   "next": "Chờ anh quyết",
+   "owner": "—",
+   "segment": "Childcare (OSHC)",
+   "stage": "hold"
+  },
+  {
+   "company": "theBOSSapp",
+   "lastTouch": "2026-10-29T07:20:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Field ops",
+   "stage": "contacted"
+  },
+  {
+   "company": "Trendspek",
+   "lastTouch": "2026-10-29T07:20:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Asset inspection",
+   "stage": "contacted"
+  },
+  {
+   "company": "VCI Legal",
+   "lastTouch": "2026-10-29T06:36:00Z",
+   "market": "VN",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Lead cũ",
+   "stage": "contacted"
+  },
+  {
+   "company": "Villa Song Saigon",
+   "lastTouch": "2026-10-29T06:37:00Z",
+   "market": "VN",
+   "next": "Chốt gia hạn 12 tháng trước 04/11",
+   "owner": "Phoebe",
+   "segment": "Khách hiện tại",
+   "stage": "proposal"
+  },
+  {
+   "company": "VR360",
+   "lastTouch": "2026-10-29T06:27:00Z",
+   "market": "VN",
+   "next": "Nhắc lại 31/10 (cần duyệt)",
+   "owner": "Sales Lead",
+   "segment": "Toy City",
+   "stage": "contacted"
+  },
+  {
+   "company": "Word Of Mouth Agency",
+   "lastTouch": "2026-10-29T07:20:00Z",
+   "market": "AU",
+   "next": "Chờ phản hồi",
+   "owner": "Sales Lead",
+   "segment": "Agency",
+   "stage": "contacted"
+  }
+ ],
+ "routines": [
+  {
+   "name": "Báo cáo bán Toy City 18h",
+   "enabled": true,
+   "next_run_at": "2026-10-29T10:45:00Z",
+   "cron_expression": "CRON_TZ=Asia/Ho_Chi_Minh 45 17 * * *",
+   "last_run": {
+    "status": null,
+    "fired_at": null
+   }
+  }
+ ],
+ "sessions": [
+  {
+   "title": "Toy City project sales",
+   "status_bucket": "SESSION_STATUS_BUCKET_WORKING",
+   "updated_at": "2026-10-29T07:45:00Z",
+   "summary": "Dựng quy trình agent bán hàng, dashboard và CI/CD GitHub Pages"
+  }
+ ],
+ "routinesAt": "2026-10-29T07:47:50Z"
+}
