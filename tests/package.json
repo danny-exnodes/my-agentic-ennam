@@ -1,0 +1,11 @@
+{
+  "name": "agent-ops-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node db.test.mjs && node --experimental-strip-types --no-warnings api.test.ts"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.2.17"
+  }
+}

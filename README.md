@@ -1,9 +1,21 @@
 # my-agentic-ennam
 
-Đội agent bán hàng của Exnodes và Én Nam: tìm khách (ưu tiên Úc), chào hàng, follow-up, giao việc cho người và báo cáo hằng ngày. Có dashboard realtime để Danny theo dõi mọi lúc mọi nơi.
+Đội agent bán hàng của Exnodes và Én Nam: tìm khách (ưu tiên Úc), chào hàng, follow-up, giao việc cho người và báo cáo hằng ngày, kèm hệ thống **Agent Ops** để Danny theo dõi và duyệt việc.
 
-- Bắt đầu: `CLAUDE.md`, sau đó `.claude/skills/sales-workflow/SKILL.md`.
-- Luật: `memory/rules.md`.
-- Dashboard: https://claude.ai/artifact/6eHNJKrdCLh7F1c88gtj9a (`dashboard/`).
-- Bản công khai của dashboard (GitHub Pages): https://danny-exnodes.github.io/my-agentic-ennam/. Trang deploy bằng `.github/workflows/pages.yml` mỗi khi `site/` thay đổi.
-- Repo đang **public**. Đề xuất giá (`memory/bids/`) không được đưa lên repo, và không đưa thông tin cá nhân vào repo.
+## Agent Ops
+- **Web app:** https://danny-exnodes.github.io/my-agentic-ennam/. Đăng nhập bằng magic link, chỉ email có trong bảng `admins` mới xem được dữ liệu.
+- **Theo dõi:** agent trên cloud, trên máy local và routine (đang chạy, chờ, bị chặn, mất kết nối), từng run, lịch routine (lỡ lịch, lần trước lỗi), pipeline, prospect, nhật ký, KPI.
+- **Hàng đợi Duyệt:** agent đề xuất (gửi email, follow-up, việc cần người làm). Danny duyệt hoặc từ chối trên web. Agent gửi email đã duyệt ở lần chạy kế tiếp rồi ghi kết quả.
+- **Kiến trúc:** Supabase (Postgres + RLS + Auth + Realtime) · Edge Function `agent-api` nhận dữ liệu từ agent bằng token riêng của từng agent · hook Claude Code gọi `scripts/agentops.py` · web tĩnh trên GitHub Pages.
+
+## Bắt đầu
+- Cài đặt lần đầu: `SETUP.md`.
+- Agent: `CLAUDE.md`, sau đó `.claude/skills/sales-workflow/SKILL.md`. Luật: `memory/rules.md`.
+- Test: `cd tests && npm ci && npm test`.
+
+## CI/CD
+- `ci.yml`: test database, API, kiểm tra `site/` trên mọi push và PR.
+- `pages.yml`: deploy `site/` lên GitHub Pages.
+- `supabase.yml`: áp migration và deploy `agent-api` khi `supabase/` đổi. Bỏ qua nếu chưa có secret.
+
+Repo **public**: chỉ chứa code, quy trình và hồ sơ công ty. Dữ liệu khách nằm trong Supabase, hội thoại nằm trong Gmail. Không đưa thông tin cá nhân, giá hay đề xuất thầu lên repo.

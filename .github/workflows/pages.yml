@@ -1,9 +1,9 @@
-name: Deploy Agent Ops to GitHub Pages
+name: Deploy web app to GitHub Pages
 
 on:
   push:
     branches: [main]
-    paths: ["site/**", "scripts/**", ".github/workflows/pages.yml"]
+    paths: ["site/**", "scripts/check_site.py", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check site data
+      - name: Public site guard
         run: python3 scripts/check_site.py
       - uses: actions/configure-pages@v5
         with:

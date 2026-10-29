@@ -1,0 +1,6 @@
+# Supabase CLI config (only what this project needs).
+project_id = "agent-ops"
+
+[functions.agent-api]
+# Agents authenticate with their own token (checked inside the function), not a Supabase JWT.
+verify_jwt = false

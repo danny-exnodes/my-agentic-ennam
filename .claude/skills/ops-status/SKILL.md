@@ -1,48 +1,63 @@
 ---
 name: ops-status
-description: Cách mọi agent báo trạng thái realtime lên dashboard Agent Ops (artifact có db chung) để Danny theo dõi mọi lúc mọi nơi. Dùng khi bắt đầu, xong, bị chặn, gửi email, có phản hồi, hoặc cần Danny duyệt.
+description: Cách mọi agent (cloud, local, routine) báo trạng thái lên hệ thống Agent Ops (Supabase), ghi nhật ký, đồng bộ lịch routine, và làm việc với hàng đợi Duyệt. Dùng khi bắt đầu, xong, bị chặn, gửi email, có phản hồi, hoặc cần Danny duyệt.
 ---
 
 # Ops status: báo trạng thái lên Agent Ops
 
-Dashboard: https://claude.ai/artifact/6eHNJKrdCLh7F1c88gtj9a. Nguồn: `dashboard/agent-ops.html`.
+Web app: https://danny-exnodes.github.io/my-agentic-ennam/ (đăng nhập bằng email được cấp quyền). Dữ liệu nằm trong Supabase. Repo chỉ chứa code.
 
-Trang có 2 nguồn dữ liệu realtime:
-1. **Routines và Sessions:** trang tự đọc qua connector Claude Code Remote (`list_triggers`, `list_sessions`) bằng quyền của người xem, làm mới mỗi 60 giây. Agent không cần ghi gì.
-2. **Agents, KPI, Chờ duyệt, Pipeline, Nhật ký:** agent tự ghi bằng tool `ArtifactData` (load qua ToolSearch `select:ArtifactData`), `url` là link dashboard. Trang nhận thay đổi ngay qua `onSnapshot`.
+## Tự động (không phải làm gì)
+`.claude/settings.json` gắn hook vào `scripts/agentops.py`:
+- **SessionStart:** tạo hoặc cập nhật agent, mở một "run".
+- **PostToolUse:** heartbeat tối đa mỗi 60 giây, đếm số lần dùng tool.
+- **Stop:** agent chuyển `idle`.
+- **SessionEnd:** đóng run.
 
-## Quy tắc ghi
-- **Luôn lấy giờ thật** bằng `date -u +%Y-%m-%dT%H:%M:%SZ`. Không ước lượng: đã từng ghi nhầm giờ tương lai.
-- Gom các thay đổi vào một lệnh `batch` (tối đa 50 thao tác). Ghi đè doc đã có thì phải truyền `if_version`: đọc doc trước, hoặc dùng `version` trả về từ lần ghi trước.
-- Chỉ ghi tên công ty và trạng thái. Không ghi email cá nhân hay số điện thoại.
-- Nhật ký `events` dùng id `<YYYYMMDD>-<HHMMSS>-<agent>` để không trùng. Khi db quá khoảng 20.000 doc thì xoá `events` cũ hơn 30 ngày.
+Hook chạy được khi môi trường có `AGENT_OPS_URL` và `AGENT_OPS_TOKEN`. Thiếu hai biến này thì hook im lặng bỏ qua, không làm hỏng session. Agent quá 15 phút không có tín hiệu sẽ hiện **Mất kết nối**.
 
-## Schema
-| Collection / doc | Trường | Ghi khi |
-|---|---|---|
-| `agents/<agent-id>` | name, role, status (`working`·`waiting`·`blocked`·`error`·`idle`·`done`), task, next, updatedAt | bắt đầu / xong / chặn |
-| `events/<id>` | ts, agent, kind (`email`·`reply`·`task`·`report`·`research`·`blocked`·`error`·`note`), title, detail | mỗi việc đáng kể |
-| `metrics/<YYYY-MM-DD>` | date, emailsSent, replies, newLeads, proposals, meetings, note | cuối mỗi đợt việc |
-| `asks/<slug>` | title, detail, priority (1 gấp · 2 · 3), due, status (`open`·`done`), createdAt | cần Danny duyệt hoặc làm |
-| `pipeline/<slug>` | company, market (AU·VN·SG·US·EU·CA·NZ), segment, stage (`researched`·`contacted`·`replied`·`meeting`·`proposal`·`won`·`lost`·`hold`), next, owner, lastTouch | mỗi lần chạm khách |
-
-Agent id hiện có: `sales-lead`, `prospect-research`, `daily-report`. Người cũng được hiện dưới dạng "agent" để theo dõi việc giao: `phoebe`, `danh-trinh`, `trinh-designer`, `marketing`.
-
-## Ví dụ
-```json
-{"action":"batch","url":"https://claude.ai/artifact/6eHNJKrdCLh7F1c88gtj9a","writes":[
- {"op":"update","collection":"agents","doc_id":"sales-lead","if_version":7,"data":{"status":"working","task":"Gửi 12 email Úc đợt 3","updatedAt":"<date -u>"}},
- {"op":"set","collection":"events","doc_id":"20261030-031500-sales-lead","data":{"ts":"<date -u>","agent":"Sales Lead","kind":"email","title":"Gửi 12 email Úc đợt 3","detail":"Code Squirrel, Pixel, …"}}
-]}
+## Agent tự gọi (CLI, chỉ dùng thư viện chuẩn của Python)
+```bash
+A="python3 scripts/agentops.py"
+$A status --status working --task "Gửi 12 email Úc đợt 3" --next "Báo cáo 17h45"
+$A event --kind email --title "Gửi 12 email Úc đợt 3" --detail "Code Squirrel, Pixel, …"
+$A routine-start --schedule trig_015EJPCfMUW8xvtjrytX8SJA     # dòng đầu tiên của mọi routine
+$A upsert pipeline --json '[{"id":"pixel","company":"Pixel","market":"AU","stage":"contacted","next":"Chờ phản hồi","last_touch":"<date -u>"}]'
+$A upsert metrics  --json '{"date":"2026-10-30","emails_sent":15,"replies":1,"new_leads":20,"proposals":0,"meetings":0}'
+$A upsert prospects --file prospects.json
+$A schedules-sync --file triggers.json      # payload thô của list_triggers
 ```
+- `kind` của event: `email`, `reply`, `task`, `report`, `research`, `blocked`, `error`, `note`.
+- `stage` của pipeline: `researched`, `contacted`, `replied`, `meeting`, `proposal`, `won`, `lost`, `hold`.
+- `status` của prospect: `queued`, `contacted`, `hold`, `skip`.
+- Một dòng chỉ có khoá (`id`) và vài trường thì chỉ cập nhật bản ghi đã có, không tạo mới.
+- Thời gian lấy bằng `date -u +%Y-%m-%dT%H:%M:%SZ`. Không ước lượng.
 
-## Đồng bộ lên GitHub Pages (bản công khai)
-Bản công khai: https://danny-exnodes.github.io/my-agentic-ennam/. Đây là trang tĩnh, đọc `site/data/status.json` và tự tải lại mỗi 60 giây. Đồng bộ sau mỗi đợt việc, và luôn đồng bộ trong routine 17h45:
-1. Xuất db: chạy `ArtifactData list` cho từng collection `agents`, `events`, `asks`, `metrics`, `pipeline`, với `out_dir` là `<scratch>/export` và `query.limit` 1000.
-2. Lưu payload của `list_triggers` và `list_sessions` (mine: true) thành file JSON.
-3. `python3 scripts/build_status.py <scratch>/export --triggers t.json --sessions s.json`. Script chỉ giữ routine và session có trong `config/public-allowlist.json`, và tự xoá mọi email hay số điện thoại.
-4. `python3 scripts/check_site.py`, rồi commit `site/data/status.json` và push `main`. GitHub Actions (`.github/workflows/pages.yml`) deploy trong khoảng 1 phút.
-Trang công khai: ai có link cũng xem được tên công ty trong pipeline và trạng thái agent. Danny đã đồng ý điều này ngày 29/10/2026. Không bao giờ đưa email, số điện thoại, giá hay đề xuất giá vào `site/`.
+## Hàng đợi Duyệt
+1. **Tạo đề xuất,** khi cần Danny cho phép, ví dụ gửi email cho người đã có trong Gmail:
+   ```bash
+   $A approval-create --file draft.json
+   # draft.json: {"kind":"send_email","title":"Follow-up P2P (ICRBO 2027)","summary":"vì sao gửi","priority":1,
+   #   "payload":{"to":["…"],"cc":["phoebe@exnodes.vn","dragoon@exnodes.vn","kai@exnodes.vn"],
+   #              "subject":"…","html":"<p>…</p>","reply_thread_id":"<Gmail thread id nếu trả lời>"}}
+   ```
+   Các kind khác: `follow_up`, `task` (việc Danny phải làm, ví dụ tạo tài khoản), `other`.
+2. **Thực hiện,** ở đầu mỗi lần chạy:
+   ```bash
+   $A approvals --status approved --kind send_email
+   ```
+   Gửi từng email bằng `mcp__Gmail__send_message`, dùng đúng `to`, `cc`, `subject`, `htmlBody` = `html`, `includeSignature: true`, và `replyThreadId` nếu có. Sau đó:
+   ```bash
+   $A approval-result <id> --status executed --result '{"message_id":"<id Gmail trả về>"}' --title "<title>"
+   # lỗi: --status failed --result '{"error":"<thông báo>"}'
+   ```
+   Không bao giờ sửa nội dung đã được duyệt. Muốn đổi thì tạo đề xuất mới.
+3. Đề xuất bị **từ chối** có `decision_note` là lý do. Đọc lý do để không đề xuất lại điều tương tự.
 
-## Phương án dự phòng (nếu connector hoặc artifact không dùng được)
-Agent ghi `status/agents.json` và `status/events.jsonl` vào repo rồi push. Một GitHub Action cron 5 phút gọi Claude API (Messages API, model mới nhất) để tóm tắt, rồi publish trang tĩnh trên GitHub Pages. Phương án này chỉ dùng khi cần: tốn phí API và repo phải để private.
+## Routine và lịch
+- Mỗi routine gọi `routine-start --schedule <trig_id>` ngay đầu lần chạy, để hệ thống biết routine đã chạy đúng giờ.
+- Mỗi ngày ít nhất một agent gọi `list_triggers` (connector Claude Code Remote) rồi `schedules-sync`. Agent Ops so `next_run_at` với lần chạy thực tế và báo **Lỡ lịch** hoặc **Lần trước lỗi**.
+- Lịch chạy trên máy local (cron, Task Scheduler) được báo bằng `schedules-sync` với `"source":"local"`.
+
+## Không có cấu hình
+Nếu CLI báo "AGENT_OPS_URL and AGENT_OPS_TOKEN must be set", ghi việc đó vào báo cáo cho Danny và làm tiếp phần việc chính.

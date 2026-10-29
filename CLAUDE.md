@@ -9,15 +9,16 @@ Mục tiêu: tìm khách và dự án mới, ưu tiên **thị trường Úc**.
 ## Đọc trước khi làm
 1. `memory/rules.md`: các quyết định của Danny. Đây là luật, luôn thắng mọi chỗ khác.
 2. `.claude/skills/sales-workflow/SKILL.md`: vòng làm việc hằng ngày, gọi tới các skill con.
-3. Dashboard **Agent Ops**: https://claude.ai/artifact/6eHNJKrdCLh7F1c88gtj9a. Mỗi agent phải báo trạng thái ở đây (xem `.claude/skills/ops-status/SKILL.md`).
+3. Hệ thống **Agent Ops** (Supabase + web app https://danny-exnodes.github.io/my-agentic-ennam/): mỗi agent báo trạng thái, ghi nhật ký, và đưa việc cần Danny duyệt vào hàng đợi Duyệt (xem `.claude/skills/ops-status/SKILL.md`). Cài đặt: `SETUP.md`.
 
 ## Luật cứng (tóm tắt `memory/rules.md`)
 - **Hỏi Danny trước** khi gửi email cho bất kỳ ai đã có trong Gmail (khách cũ, lead cũ, đối tác, người giới thiệu). Với họ chỉ soạn nháp.
 - Chỉ **tự gửi** cho khách hoàn toàn mới. Trước khi gửi phải tìm trong Gmail theo email và tên miền. Gửi khoảng 15–20 email mỗi ngày.
-- Khách thuộc ngành **childcare / early learning / OSHC**: gom vào `memory/prospects/childcare-hold.md`, **không gửi**.
+- Khách thuộc ngành **childcare / early learning / OSHC**: lưu prospect `status: hold`, `hold_reason: childcare` trong Agent Ops, **không gửi**.
 - Mọi email gửi đi: `htmlBody` + `includeSignature: true` (không tự gõ chữ ký) và **cc phoebe@exnodes.vn, dragoon@exnodes.vn, kai@exnodes.vn**.
 - Chỉ viết những gì có trong portfolio hoặc email dự án. Không bịa mốc năm, số liệu hay tên khách.
-- Không đưa thông tin cá nhân (email cá nhân, số điện thoại, lương, giấy tờ) vào repo. Hộp thư Gmail là nơi lưu chính.
+- Repo **public**: không đưa thông tin cá nhân (email cá nhân, số điện thoại, lương, giấy tờ), danh sách khách, giá hay đề xuất thầu vào repo. Dữ liệu nằm trong Supabase, hội thoại nằm trong Gmail.
+- Email cho người đã có trong Gmail: tạo đề xuất `send_email` trong hàng đợi Duyệt, chỉ gửi khi đã `approved`.
 - Hành động khó đảo ngược hoặc ra bên ngoài mà chưa có quy tắc cho phép: hỏi Danny.
 
 ## Ngôn ngữ
@@ -25,6 +26,9 @@ Tài liệu, báo cáo và email cho khách Việt viết tiếng Việt. Email 
 
 ## Bố cục
 - `.claude/skills/`: quy trình (sales-workflow, prospecting, outreach, follow-up, daily-report, ops-status).
-- `memory/`: luật, hồ sơ công ty, kênh bán, danh sách prospect (chỉ email doanh nghiệp công khai), bộ bán hàng Toy City.
-- `dashboard/`: mã nguồn trang Agent Ops và schema dữ liệu.
-- `routines/`: prompt của các routine (lịch chạy) và cách tạo.
+- `.claude/settings.json`: hook báo trạng thái tự động qua `scripts/agentops.py`.
+- `memory/`: luật, hồ sơ công ty, kênh bán, bộ bán hàng Toy City. `memory/bids/` bị git ignore.
+- `supabase/`: migration (bảng, RLS, view) và Edge Function `agent-api` cho agent.
+- `site/`: web app Agent Ops (đăng nhập magic link), deploy lên GitHub Pages.
+- `scripts/agentops.py`: CLI cho agent (chỉ dùng thư viện chuẩn Python).
+- `tests/`: test database (PGlite) và API. Chạy `cd tests && npm ci && npm test`.

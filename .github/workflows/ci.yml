@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Database and API tests (PGlite)
+        working-directory: tests
+        run: npm ci && npm test
+      - name: Python scripts compile
+        run: python3 -m py_compile scripts/*.py
+      - name: Public site guard
+        run: python3 scripts/check_site.py
+      - name: Web app syntax
+        run: node --check site/app.js

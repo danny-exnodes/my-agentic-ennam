@@ -12,9 +12,9 @@ Mỗi dòng ghi ngày chốt. Quy tắc mới hơn thắng quy tắc cũ khi mâ
 | 29/10/2026 | **Phải hỏi Danny trước** khi gửi email cho người đã có trong Gmail, vì nhiều dự án đã drop mà mail không thể hiện. Với họ chỉ soạn nháp và đưa vào báo cáo để duyệt. |
 | 29/10/2026 | Kênh Danny tự đăng: Facebook/Zalo cá nhân, LinkedIn. Nhóm Marketing (Dung, Tuyền) đăng trang công ty và điền form liên hệ. |
 | 29/10/2026 | Tập trung thị trường **Úc**. Email giới thiệu chuẩn chỉnh, kèm link portfolio `https://exnodes.vn/staticfile/Exnodes-Project-Portfolio.pdf`. |
-| 29/10/2026 | Khách ngành **childcare**: gom lại, không gửi email, để tính sau. Lý do: Én Nam đang làm cho Care for Kids. |
+| 29/10/2026 | Khách ngành **childcare**: gom lại, không gửi email, để tính sau. Lý do: tránh xung đột lợi ích với khách hiện tại cùng ngành. |
 | 29/10/2026 | Mọi email gửi đi đều **cc phoebe@exnodes.vn, dragoon@exnodes.vn, kai@exnodes.vn**. |
 | 29/10/2026 | Không lưu thông tin liên hệ cá nhân của khách vào repo. Chỉ lưu tên công ty, email doanh nghiệp công khai, trạng thái. |
 | 29/10/2026 | Chỉ nêu điều có trong portfolio hoặc email dự án. Đã có một lần lỡ ghi "Flutter từ 2019" (email gửi Code Heroes), không được lặp lại. |
-| 29/10/2026 | Có dashboard realtime Agent Ops. Mỗi agent phải báo trạng thái khi bắt đầu, khi xong và khi bị chặn. |
-| 29/10/2026 | Repo chính là `danny-exnodes/my-agentic-ennam` (public). Dashboard được deploy công khai lên GitHub Pages; Danny chấp nhận việc lộ tên công ty trong pipeline và trạng thái agent. Đề xuất giá và thông tin cá nhân không đưa lên repo. |
+| 29/10/2026 | Hệ thống Agent Ops độc lập: Supabase (Postgres + đăng nhập + realtime), web app trên GitHub Pages. Repo `my-agentic-ennam` giữ **public**, nên dữ liệu khách, pipeline, prospect và trạng thái chỉ nằm trong database có đăng nhập, **không** nằm trong repo. |
+| 29/10/2026 | Mọi email cần Danny duyệt đi qua hàng đợi **Duyệt** của Agent Ops. Danny bấm Duyệt trên web, agent gửi ở lần chạy kế tiếp, rồi ghi kết quả. |
