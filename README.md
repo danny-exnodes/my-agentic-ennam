@@ -17,6 +17,7 @@
 ## CI/CD
 - `ci.yml`: test database, API, kiểm tra `site/` trên mọi push và PR.
 - `pages.yml`: deploy `site/` lên GitHub Pages.
+- `release.yml`: khi `VERSION` trên `main` đổi, tạo tag `vX.Y.Z` và GitHub Release từ `docs/releases/vX.Y.Z.md`.
 - `supabase.yml`: áp migration và deploy `agent-api` khi `supabase/` đổi. Bỏ qua nếu chưa có secret.
 
 Repo **public**: chỉ chứa code, quy trình và hồ sơ công ty. Dữ liệu khách nằm trong Supabase, hội thoại nằm trong Gmail. Không đưa thông tin cá nhân, giá hay đề xuất thầu lên repo.
