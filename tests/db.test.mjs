@@ -1,5 +1,6 @@
 // Row level security, approval guard and live views.
-import { freshDb, check } from './harness.mjs';
+import fs from 'node:fs';
+import { freshDb, check, MIGRATIONS } from './harness.mjs';
 const db = await freshDb();
 const { ok, done } = check();
 const q = (s, p) => db.query(s, p);
@@ -43,5 +44,9 @@ await as('authenticated', 'danny.tranhoang@exnodes.vn', () => q(`insert into age
 await as('authenticated', 'danny.tranhoang@exnodes.vn', () => q(`insert into agent_tokens(agent_id, token_hash, allow_agents) values ('laptop','abc', '{sales-lead}')`));
 ok((await q(`select count(*)::int n from agent_tokens`)).rows[0].n === 1, 'owner registers agent and token');
 ok((await as('authenticated', 'stranger@gmail.com', () => q('select * from agent_tokens'))).rows.length === 0, 'tokens hidden from non-owner');
+
+// Fix-up migrations must survive a second run: CI's `supabase db push` replays any that were first applied by hand.
+const fixups = fs.readdirSync(MIGRATIONS).filter((f) => f.endsWith('.sql')).sort().slice(1);
+ok(await err((async () => { for (const f of fixups) await db.exec(fs.readFileSync(MIGRATIONS + f, 'utf8')); })()) === null, 'fix-up migrations re-apply cleanly');
 
 done();

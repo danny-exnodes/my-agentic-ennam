@@ -45,6 +45,10 @@ declare
 begin
   foreach spec slice 1 in array specs loop
     execute format('drop policy if exists %I on public.%I', spec[2], spec[1]);
+    -- Drop the split policies too so the migration can be re-applied (it was first applied by hand).
+    execute format('drop policy if exists %I on public.%I', spec[1] || '_insert', spec[1]);
+    execute format('drop policy if exists %I on public.%I', spec[1] || '_update', spec[1]);
+    execute format('drop policy if exists %I on public.%I', spec[1] || '_delete', spec[1]);
     execute format('create policy %I on public.%I for insert to authenticated with check (%s)', spec[1] || '_insert', spec[1], spec[3]);
     execute format('create policy %I on public.%I for update to authenticated using (%s) with check (%s)', spec[1] || '_update', spec[1], spec[3], spec[3]);
     execute format('create policy %I on public.%I for delete to authenticated using (%s)', spec[1] || '_delete', spec[1], spec[3]);
