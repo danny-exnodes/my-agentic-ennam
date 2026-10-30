@@ -9,7 +9,8 @@ Mục tiêu: tìm khách và dự án mới, ưu tiên **thị trường Úc**.
 ## Đọc trước khi làm
 1. `memory/rules.md`: các quyết định của Danny. Đây là luật, luôn thắng mọi chỗ khác.
 2. `.claude/skills/sales-workflow/SKILL.md`: vòng làm việc hằng ngày, gọi tới các skill con.
-3. Hệ thống **Agent Ops** (Supabase + web app https://danny-exnodes.github.io/my-agentic-ennam/): mỗi agent báo trạng thái, ghi nhật ký, và đưa việc cần Danny duyệt vào hàng đợi Duyệt (xem `.claude/skills/ops-status/SKILL.md`). Cài đặt: `SETUP.md`.
+3. `docs/CHECKPOINT.md`: trạng thái công việc mới nhất và việc đang chờ. Release note ở `docs/releases/`.
+4. Hệ thống **Agent Ops** (Supabase + web app https://danny-exnodes.github.io/my-agentic-ennam/): mỗi agent báo trạng thái, ghi nhật ký, và đưa việc cần Danny duyệt vào hàng đợi Duyệt (xem `.claude/skills/ops-status/SKILL.md`). Cài đặt: `SETUP.md`.
 
 ## Luật cứng (tóm tắt `memory/rules.md`)
 - **Hỏi Danny trước** khi gửi email cho bất kỳ ai đã có trong Gmail (khách cũ, lead cũ, đối tác, người giới thiệu). Với họ chỉ soạn nháp.

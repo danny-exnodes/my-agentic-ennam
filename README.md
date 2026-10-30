@@ -12,6 +12,7 @@
 - Cài đặt lần đầu: `SETUP.md`.
 - Agent: `CLAUDE.md`, sau đó `.claude/skills/sales-workflow/SKILL.md`. Luật: `memory/rules.md`.
 - Test: `cd tests && npm ci && npm test`.
+- Phiên bản: `VERSION` (hiện 0.0.1), `CHANGELOG.md`, release note ở `docs/releases/`, trạng thái mới nhất ở `docs/CHECKPOINT.md`.
 
 ## CI/CD
 - `ci.yml`: test database, API, kiểm tra `site/` trên mọi push và PR.
