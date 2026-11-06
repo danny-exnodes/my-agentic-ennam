@@ -16,7 +16,7 @@ description: Gửi email chào hàng cho khách mới của Exnodes và Én Nam 
 ```
 mcp__Gmail__send_message({
   to: [<email công khai>],
-  cc: ["phoebe@exnodes.vn", "dragoon@exnodes.vn", "kai@exnodes.vn"],
+  cc: ["phoebe@exnodes.vn", "kai@exnodes.vn"],
   subject, htmlBody, includeSignature: true
 })
 ```
