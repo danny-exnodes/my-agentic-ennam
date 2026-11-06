@@ -38,7 +38,7 @@ $A schedules-sync --file triggers.json      # payload thô của list_triggers
    ```bash
    $A approval-create --file draft.json
    # draft.json: {"kind":"send_email","title":"Follow-up P2P (ICRBO 2027)","summary":"vì sao gửi","priority":1,
-   #   "payload":{"to":["…"],"cc":["phoebe@exnodes.vn","dragoon@exnodes.vn","kai@exnodes.vn"],
+   #   "payload":{"to":["…"],"cc":["phoebe@exnodes.vn","kai@exnodes.vn"],
    #              "subject":"…","html":"<p>…</p>","reply_thread_id":"<Gmail thread id nếu trả lời>"}}
    ```
    Các kind khác: `follow_up`, `task` (việc Danny phải làm, ví dụ tạo tài khoản), `other`.

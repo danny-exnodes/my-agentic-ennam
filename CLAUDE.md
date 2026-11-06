@@ -16,7 +16,7 @@ Mục tiêu: tìm khách và dự án mới, ưu tiên **thị trường Úc**.
 - **Hỏi Danny trước** khi gửi email cho bất kỳ ai đã có trong Gmail (khách cũ, lead cũ, đối tác, người giới thiệu). Với họ chỉ soạn nháp.
 - Chỉ **tự gửi** cho khách hoàn toàn mới. Trước khi gửi phải tìm trong Gmail theo email và tên miền. Gửi khoảng 15–20 email mỗi ngày.
 - Khách thuộc ngành **childcare / early learning / OSHC**: lưu prospect `status: hold`, `hold_reason: childcare` trong Agent Ops, **không gửi**.
-- Mọi email gửi đi: `htmlBody` + `includeSignature: true` (không tự gõ chữ ký) và **cc phoebe@exnodes.vn, dragoon@exnodes.vn, kai@exnodes.vn**.
+- Mọi email gửi đi: `htmlBody` + `includeSignature: true` (không tự gõ chữ ký) và **cc phoebe@exnodes.vn và kai@exnodes.vn**.
 - Chỉ viết những gì có trong portfolio hoặc email dự án. Không bịa mốc năm, số liệu hay tên khách.
 - Repo **public**: không đưa thông tin cá nhân (email cá nhân, số điện thoại, lương, giấy tờ), danh sách khách, giá hay đề xuất thầu vào repo. Dữ liệu nằm trong Supabase, hội thoại nằm trong Gmail.
 - Email cho người đã có trong Gmail: tạo đề xuất `send_email` trong hàng đợi Duyệt, chỉ gửi khi đã `approved`.

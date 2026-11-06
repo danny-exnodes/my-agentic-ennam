@@ -13,8 +13,9 @@ Mỗi dòng ghi ngày chốt. Quy tắc mới hơn thắng quy tắc cũ khi mâ
 | 29/10/2026 | Kênh Danny tự đăng: Facebook/Zalo cá nhân, LinkedIn. Nhóm Marketing (Dung, Tuyền) đăng trang công ty và điền form liên hệ. |
 | 29/10/2026 | Tập trung thị trường **Úc**. Email giới thiệu chuẩn chỉnh, kèm link portfolio `https://exnodes.vn/staticfile/Exnodes-Project-Portfolio.pdf`. |
 | 29/10/2026 | Khách ngành **childcare**: gom lại, không gửi email, để tính sau. Lý do: tránh xung đột lợi ích với khách hiện tại cùng ngành. |
-| 29/10/2026 | Mọi email gửi đi đều **cc phoebe@exnodes.vn, dragoon@exnodes.vn, kai@exnodes.vn**. |
+| 06/11/2026 | Mọi email gửi khách đều **cc phoebe@exnodes.vn và kai@exnodes.vn** (thay luật cc 3 người ngày 29/10). |
 | 29/10/2026 | Không lưu thông tin liên hệ cá nhân của khách vào repo. Chỉ lưu tên công ty, email doanh nghiệp công khai, trạng thái. |
 | 29/10/2026 | Chỉ nêu điều có trong portfolio hoặc email dự án. Đã có một lần lỡ ghi "Flutter từ 2019" (email gửi Code Heroes), không được lặp lại. |
 | 29/10/2026 | Hệ thống Agent Ops độc lập: Supabase (Postgres + đăng nhập + realtime), web app trên GitHub Pages. Repo `my-agentic-ennam` giữ **public**, nên dữ liệu khách, pipeline, prospect và trạng thái chỉ nằm trong database có đăng nhập, **không** nằm trong repo. |
 | 29/10/2026 | Mọi email cần Danny duyệt đi qua hàng đợi **Duyệt** của Agent Ops. Danny bấm Duyệt trên web, agent gửi ở lần chạy kế tiếp, rồi ghi kết quả. |
+| 06/11/2026 | Duy trì tìm và chào hàng khách mới **hằng ngày** bằng lịch tự động (tự gửi cho khách hoàn toàn mới), và **kiểm tra phản hồi mỗi ngày**: trả lời và nhắc lại cho người đã có trong Gmail chỉ soạn nháp để Danny gửi. |
